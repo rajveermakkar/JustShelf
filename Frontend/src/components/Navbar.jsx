@@ -201,7 +201,8 @@ const Navbar = () => {
           </nav>
 
           <div className="flex-1 flex items-center justify-end space-x-4">
-            <div ref={searchRef} className="relative">
+            {/* Search button - Hide on mobile */}
+            <div ref={searchRef} className="relative hidden md:block">
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 className="flex items-center justify-center h-10 w-10 rounded-full hover:bg-primary/10 transition-colors"
@@ -210,9 +211,9 @@ const Navbar = () => {
                 <Search className="h-5 w-5" />
               </button>
 
-              {/* Search Dropdown - Full width on mobile */}
+              {/* Desktop Search Dropdown */}
               {isSearchOpen && (
-                <div className="absolute right-0 mt-2 w-screen sm:w-[400px] -mr-4 sm:mr-0 bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden transition-all duration-200 ease-out">
+                <div className="absolute right-0 mt-2 w-[400px] bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden transition-all duration-200 ease-out">
                   <form onSubmit={handleSearchSubmit} className="p-4">
                     <div className="relative">
                       <input
@@ -422,6 +423,73 @@ const Navbar = () => {
                 >
                   <X className="h-5 w-5" />
                 </button>
+              </div>
+
+              {/* Mobile Search Bar */}
+              <div className="p-4 border-b border-gray-100">
+                <form onSubmit={handleSearchSubmit} className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    placeholder="Search for books..."
+                    className="w-full px-4 py-2.5 pr-10 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+                  >
+                    <Search className="h-4 w-4 text-gray-500" />
+                  </button>
+                </form>
+
+                {/* Mobile Search Results */}
+                {(searchResults.length > 0 || (searchQuery.length > 0 && !isLoading)) && (
+                  <div className="mt-2 bg-white rounded-lg border border-gray-100 overflow-hidden">
+                    {isLoading ? (
+                      <div className="py-4 text-center">
+                        <div className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-primary border-r-transparent"></div>
+                      </div>
+                    ) : searchResults.length > 0 ? (
+                      <div className="max-h-[300px] overflow-y-auto">
+                        {searchResults.map((book) => (
+                          <Link
+                            key={book.id}
+                            to={`/books/${book.id}`}
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setSearchQuery('');
+                            }}
+                            className="flex items-center gap-3 p-3 hover:bg-gray-50 border-b border-gray-100 last:border-0"
+                          >
+                            <div className="h-12 w-8 flex-shrink-0">
+                              {book.image_url ? (
+                                <img
+                                  src={book.image_url}
+                                  alt={book.title}
+                                  className="h-full w-full object-cover rounded"
+                                />
+                              ) : (
+                                <div className="h-full w-full bg-gray-200 rounded flex items-center justify-center">
+                                  <span className="text-xs text-gray-400">No image</span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex flex-col min-w-0">
+                              <span className="text-sm font-medium truncate">{book.title}</span>
+                              <span className="text-xs text-gray-500">{book.author}</span>
+                              <span className="text-xs text-primary font-medium">${book.price}</span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-3 text-center text-sm text-gray-500">
+                        No results found
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               <nav className="flex-1 overflow-y-auto py-4">
