@@ -1,0 +1,144 @@
+{
+  "auth": {
+    "base": "/api/auth",
+    "endpoints": {
+      "register": {
+        "path": "/register",
+        "method": "POST",
+        "description": "Register a new user",
+        "body": {
+          "email": "string",
+          "password": "string",
+          "first_name": "string",
+          "last_name": "string",
+          "role": "string (optional, defaults to 'user')"
+        }
+      },
+      "login": {
+        "path": "/login",
+        "method": "POST",
+        "description": "Login user",
+        "body": {
+          "email": "string",
+          "password": "string"
+        }
+      }
+    }
+  },
+  "users": {
+    "base": "/users",
+    "endpoints": {
+      "profile": {
+        "path": "/profile",
+        "method": "GET",
+        "description": "Get user profile",
+        "auth": true
+      },
+      "updateProfile": {
+        "path": "/profile",
+        "method": "PUT",
+        "description": "Update user profile",
+        "auth": true,
+        "body": {
+          "first_name": "string",
+          "last_name": "string",
+          "phone_number": "string"
+        }
+      },
+      "addresses": {
+        "path": "/addresses",
+        "method": "GET",
+        "description": "Get user addresses",
+        "auth": true
+      },
+      "addAddress": {
+        "path": "/addresses",
+        "method": "POST",
+        "description": "Add new address",
+        "auth": true,
+        "body": {
+          "address_line1": "string",
+          "address_line2": "string (optional)",
+          "city": "string",
+          "state": "string",
+          "postal_code": "string",
+          "is_default": "boolean"
+        }
+      },
+      "deleteAddress": {
+        "path": "/addresses/:id",
+        "method": "DELETE",
+        "description": "Delete address",
+        "auth": true
+      },
+      "setDefaultAddress": {
+        "path": "/addresses/:id/default",
+        "method": "PUT",
+        "description": "Set default address",
+        "auth": true
+      }
+    }
+  },
+  "books": {
+    "base": "/api/books",
+    "endpoints": {
+      "getAll": {
+        "path": "/",
+        "method": "GET",
+        "description": "Get all books"
+      },
+      "getOne": {
+        "path": "/:id",
+        "method": "GET",
+        "description": "Get book by ID"
+      },
+      "create": {
+        "path": "/",
+        "method": "POST",
+        "description": "Create new book",
+        "auth": true
+      },
+      "update": {
+        "path": "/:id",
+        "method": "PUT",
+        "description": "Update book",
+        "auth": true
+      },
+      "delete": {
+        "path": "/:id",
+        "method": "DELETE",
+        "description": "Delete book",
+        "auth": true
+      }
+    }
+  },
+  "orders": {
+    "base": "/api/orders",
+    "endpoints": {
+      "getAll": {
+        "path": "/",
+        "method": "GET",
+        "description": "Get all orders",
+        "auth": true
+      },
+      "getOne": {
+        "path": "/:id",
+        "method": "GET",
+        "description": "Get order by ID",
+        "auth": true
+      },
+      "create": {
+        "path": "/",
+        "method": "POST",
+        "description": "Create new order",
+        "auth": true
+      },
+      "update": {
+        "path": "/:id",
+        "method": "PUT",
+        "description": "Update order",
+        "auth": true
+      }
+    }
+  }
+} 
