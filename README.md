@@ -2,6 +2,8 @@
 
 JustShelf is a modern e-commerce platform for books, built with React and Node.js. This project includes both frontend and backend components.
 
+Live Demo : https://justshelf.netlify.app/
+
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
